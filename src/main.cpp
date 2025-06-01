@@ -1,11 +1,11 @@
 #include "camera.h"
 
 int main() {
-    cv::VideoCapture cap;
+    Camera cam(320, 240);
+    if (!cam.open()) return -1;
 
-    if (!openCamera(cap)) return -1;
-
-    showCamera(cap);
+    cam.show();
+    cam.close();
 
     return 0;
 }
