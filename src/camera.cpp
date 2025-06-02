@@ -1,33 +1,26 @@
 #include "camera.h"
 #include <iostream>
 
-Camera::Camera(int width, int height)
-    : frameWidth(width), frameHeight(height) {}
-
-bool Camera::open() {
-    cap.open(0, cv::CAP_V4L2);  // força backend V4L2
+bool camera_abrir(cv::VideoCapture &cap, int largura, int altura) {
+    cap.open(0);
     if (!cap.isOpened()) {
-        std::cerr << "Erro ao abrir a câmera." << std::endl;
+        std::cerr << "Erro ao abrir a câmera\n";
         return false;
     }
-
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, frameWidth);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, frameHeight);
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, largura);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, altura);
     return true;
 }
 
-void Camera::show() {
+void camera_mostrar(cv::VideoCapture &cap) {
+    cv::namedWindow("Webcam", cv::WINDOW_NORMAL);
+    cv::resizeWindow("Webcam", 640, 480);
+
     cv::Mat frame;
     while (true) {
         cap >> frame;
         if (frame.empty()) break;
-
         cv::imshow("Webcam", frame);
-        if (cv::waitKey(1) == 27) break; // ESC
+        if (cv::waitKey(30) == 27) break; // ESC para sair
     }
-}
-
-void Camera::close() {
-    cap.release();
-    cv::destroyAllWindows();
 }

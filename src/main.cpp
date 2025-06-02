@@ -1,11 +1,10 @@
+#include <opencv2/opencv.hpp>
 #include "camera.h"
 
 int main() {
-    Camera cam(320, 240);
-    if (!cam.open()) return -1;
+    cv::VideoCapture cap;
 
-    cam.show();
-    cam.close();
-
+    if (!camera_abrir(cap, 640, 480)) return -1;
+    camera_mostrar(cap);
     return 0;
 }

@@ -3,17 +3,10 @@
 
 #include <opencv2/opencv.hpp>
 
-class Camera {
-public:
-    Camera(int width = 320, int height = 240);
-    bool open();
-    void show();
-    void close();
+// Função para abrir a câmera, retorna true se abriu
+bool camera_abrir(cv::VideoCapture &cap, int largura, int altura);
 
-private:
-    cv::VideoCapture cap;
-    int frameWidth;
-    int frameHeight;
-};
+// Função para mostrar vídeo da câmera (loop)
+void camera_mostrar(cv::VideoCapture &cap);
 
 #endif
