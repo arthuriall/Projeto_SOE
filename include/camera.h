@@ -2,11 +2,11 @@
 #define CAMERA_H
 
 #include <opencv2/opencv.hpp>
+#include <string>
 
-// Função para abrir a câmera, retorna true se abriu
-bool camera_abrir(cv::VideoCapture &cap, int largura, int altura);
-
-// Função para mostrar vídeo da câmera (loop)
-void camera_mostrar(cv::VideoCapture &cap);
+bool openCamera(cv::VideoCapture& cap, int device = 0);
+void closeCamera(cv::VideoCapture& cap);
+void processFrame(cv::VideoCapture& cap, int offset);
+std::string detectColor(const cv::Scalar& meanColor);
 
 #endif
