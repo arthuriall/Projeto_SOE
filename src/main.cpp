@@ -7,16 +7,6 @@
 #include <thread>
 #include <unistd.h>
 
-
-constexpr int PIN_BOTAO = 26;  // GPIO do boto
-constexpr int PIN_LASER = 19;  // GPIO do laser
-
-void piscarLaser(bool& ligado, int intervaloMs) {
-    ligado = !ligado;
-    digitalWrite(PIN_LASER, ligado ? HIGH : LOW);
-    std::this_thread::sleep_for(std::chrono::milliseconds(intervaloMs));
-}
-
 constexpr int PIN_BOTAO = 26;  // GPIO do boto
 constexpr int PIN_LASER = 19;  // GPIO do laser
 
@@ -33,56 +23,72 @@ int main() {
     pinMode(PIN_LASER, OUTPUT);
     digitalWrite(PIN_LASER, LOW);
 
-<<<<<<< HEAD
-=======
     lcdInit();
     lcdClear();
-    usleep(3000);  // Delay maior para garantir limpeza
->>>>>>> b28c11b5354bd1b9998e7111aa4de3d80c695df6
+    usleep(3000);  // Delay para garantir limpeza
     lcdSetCursor(0, 0);
     lcdPrint("Bem vindo!");
     lcdSetCursor(1, 0);
     lcdPrint("Pressione botao");
-<<<<<<< HEAD
-
 
     bool sistemaAtivo = false;
     bool laserLigado = false;
     bool ultimoEstadoBotao = true;
-
-=======
->>>>>>> b28c11b5354bd1b9998e7111aa4de3d80c695df6
 
     cv::VideoCapture cap;
 
-    bool sistemaAtivo = false;
-    bool laserLigado = false;
-    bool ultimoEstadoBotao = true;
-
+    int r = 0, g = 0, b = 0;
     std::string ultimaCor = "";
-    int r=0, g=0, b=0;
-
 
     while (true) {
         bool estadoBotao = digitalRead(PIN_BOTAO);
 
-<<<<<<< HEAD
-        if (!estadoBotao)//Botao pressionado
-        {
+        // Detecta borda de descida (boto pressionado)
+        if (ultimoEstadoBotao == HIGH && estadoBotao == LOW) {
+            sistemaAtivo = !sistemaAtivo;  // Alterna estado do sistema
 
-        std::string cor = processFrame(cap);
-        if (!cor.empty() && cor != ultimaCor) {
-            lcdClear();
-            lcdSetCursor(0, 0);
-            lcdPrint("Cor detectada:");
-            lcdSetCursor(1, 0);
-            lcdPrint(cor);
-          
-          ultimaCor = cor;
+            if (sistemaAtivo) {
+                cap.open(0);  // Abre a cmera
+                if (!cap.isOpened()) {
+                    std::cerr << "Erro ao abrir a cmera!" << std::endl;
+                    lcdClear();
+                    lcdPrint("Erro camera!");
+                    sistemaAtivo = false;
+                } else {
+                    lcdClear();
+                    lcdPrint("Sistema ativo");
+                    digitalWrite(PIN_LASER, HIGH);
+                }
+            } else {
+                cap.release();
+                digitalWrite(PIN_LASER, LOW);
+                lcdClear();
+                lcdPrint("Sistema inativo");
+            }
         }
 
-        if (cv::waitKey(1) == 27) break; // ESC
-    closeCamera(cap);
+        ultimoEstadoBotao = estadoBotao;
+
+        if (sistemaAtivo) {
+            std::string cor = processFrame(cap, r, g, b);
+            if (!cor.empty() && cor != ultimaCor) {
+                lcdClear();
+                lcdSetCursor(0, 0);
+                lcdPrint("Cor detectada:");
+                lcdSetCursor(1, 0);
+                lcdPrint(cor);
+                ultimaCor = cor;
+            }
+        }
+
+        if (cv::waitKey(1) == 27) break;  // Sai se ESC for pressionado
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));  // Pequeno delay para no usar CPU 100%
+    }
+
+    if (cap.isOpened()) {
+        cap.release();
+    }
     digitalWrite(PIN_LASER, LOW);
+
     return 0;
 }
