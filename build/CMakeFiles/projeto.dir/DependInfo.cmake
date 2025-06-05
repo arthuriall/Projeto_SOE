@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/arthur/Documents/Projeto_SOE/src/camera.cpp" "CMakeFiles/projeto.dir/src/camera.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/camera.cpp.o.d"
+  "/home/arthur/Documents/Projeto_SOE/src/lcd.cpp" "CMakeFiles/projeto.dir/src/lcd.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/lcd.cpp.o.d"
   "/home/arthur/Documents/Projeto_SOE/src/main.cpp" "CMakeFiles/projeto.dir/src/main.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/main.cpp.o.d"
   )
 

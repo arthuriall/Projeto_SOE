@@ -153,6 +153,30 @@ src/camera.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/camera.cpp.s
 .PHONY : src/camera.cpp.s
 
+src/lcd.o: src/lcd.cpp.o
+.PHONY : src/lcd.o
+
+# target to build an object file
+src/lcd.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/lcd.cpp.o
+.PHONY : src/lcd.cpp.o
+
+src/lcd.i: src/lcd.cpp.i
+.PHONY : src/lcd.i
+
+# target to preprocess a source file
+src/lcd.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/lcd.cpp.i
+.PHONY : src/lcd.cpp.i
+
+src/lcd.s: src/lcd.cpp.s
+.PHONY : src/lcd.s
+
+# target to generate assembly for a file
+src/lcd.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/lcd.cpp.s
+.PHONY : src/lcd.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... src/camera.o"
 	@echo "... src/camera.i"
 	@echo "... src/camera.s"
+	@echo "... src/lcd.o"
+	@echo "... src/lcd.i"
+	@echo "... src/lcd.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

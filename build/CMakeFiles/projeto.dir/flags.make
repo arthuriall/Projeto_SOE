@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/arthur/Documents/Projeto_SOE/include -isystem /usr/include/opencv4
 
-CXX_FLAGS = -std=gnu++17
+CXX_FLAGS = -std=gnu++14
 
