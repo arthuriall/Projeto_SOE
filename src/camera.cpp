@@ -2,8 +2,7 @@
 #include <iostream>
 
 bool openCamera(cv::VideoCapture& cap, int device) {
-    cap.open(device);
-    return cap.isOpened();
+    return cap.open(device);
 }
 
 void closeCamera(cv::VideoCapture& cap) {
@@ -11,54 +10,63 @@ void closeCamera(cv::VideoCapture& cap) {
     cv::destroyAllWindows();
 }
 
-std::string detectColor(const cv::Scalar& meanColor) {
-    int b = static_cast<int>(meanColor[0]);
-    int g = static_cast<int>(meanColor[1]);
-    int r = static_cast<int>(meanColor[2]);
+std::string detectColor(const cv::Vec3b& pixel) {
+    int b = pixel[0];
+    int g = pixel[1];
+    int r = pixel[2];
 
-    if (r >= 140 && g >= 140 && b <= 60) {
-        return "Amarelo";
-    }
-    else if (r >= g && r >= b) {
+    if (r < 40 && g < 40 && b < 40)
+        return "Preto";
+    if (r > 200 && g > 200 && b > 200)
+        return "Branco";
+    if (abs(r - g) < 15 && abs(g - b) < 15 && r > 80 && r < 200)
+        return "Cinza";
+
+    if (r > 200 && g < 100 && b < 100)
         return "Vermelho";
-    }
-    else if (g >= r && g >= b) {
+    if (g > 200 && r < 100 && b < 100)
         return "Verde";
-    }
-    else {
-        return "Indefinido";
-    }
+    if (b > 200 && r < 100 && g < 100)
+        return "Azul";
+
+    if (r > 200 && g > 200 && b < 100)
+        return "Amarelo";
+    if (g > 200 && b > 200 && r < 100)
+        return "Ciano";
+    if (r > 200 && b > 200 && g < 100)
+        return "Magenta";
+
+    if (r > 200 && g > 100 && g < 180 && b < 60)
+        return "Laranja";
+
+    return "Indefinido";
 }
+void processFrame(cv::VideoCapture& cap) {
+    static std::string ultimaCor = "";
 
-void processFrame(cv::VideoCapture& cap, int offset) {
-    static std::string corChange = "";
-    std::string corFinal = "";
+    cv::Mat frame;
+    cap >> frame;
+    if (frame.empty()) return;
 
-    cv::Mat img;
-    cap >> img;
-    if (img.empty()) return;
+    // Redimensiona para largura 640px (mantendo proporo)
+    const int newWidth = 640;
+    double scale = newWidth / static_cast<double>(frame.cols);
+    cv::resize(frame, frame, cv::Size(), scale, scale);
 
-    int h = img.rows;
-    int w = img.cols;
+    int x = frame.cols / 2;
+    int y = frame.rows / 2;
 
-    cv::Rect roi(offset, offset, w - 2*offset, h - 2*offset);
-    cv::Mat campo = img(roi);
+    cv::Vec3b pixel = frame.at<cv::Vec3b>(y, x);
+    std::string cor = detectColor(pixel);
 
-    cv::rectangle(img, roi, cv::Scalar(255, 0, 0), 3);
-
-    cv::Scalar meanColor = cv::mean(campo);
-    int b = static_cast<int>(meanColor[0]);
-    int g = static_cast<int>(meanColor[1]);
-    int r = static_cast<int>(meanColor[2]);
-
-    std::cout << "RGB médio: (" << r << ", " << g << ", " << b << ")\n";
-
-    corFinal = detectColor(meanColor);
-
-    if (corFinal != corChange) {
-        std::cout << "Cor detectada: " << corFinal << std::endl;
-        corChange = corFinal;
+    if (cor != ultimaCor) {
+        std::cout << "Cor detectada: " << cor << "\n";
+        ultimaCor = cor;
     }
 
-    cv::imshow("Camera", img);
+    cv::circle(frame, cv::Point(x, y), 5, cv::Scalar(255, 0, 0), -1);
+    cv::putText(frame, cor, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0,
+                cv::Scalar(255, 255, 255), 2);
+
+    cv::imshow("Camera", frame);
 }

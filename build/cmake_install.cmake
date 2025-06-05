@@ -1,4 +1,4 @@
-# Install script for directory: /home/arthur/Documents/projeto_soe
+# Install script for directory: /home/arthur/Documents/Projeto_SOE
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/arthur/Documents/projeto_soe/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/arthur/Documents/Projeto_SOE/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

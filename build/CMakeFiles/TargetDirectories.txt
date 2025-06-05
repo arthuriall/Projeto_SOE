@@ -1,3 +1,3 @@
-/home/arthur/Documents/projeto_soe/build/CMakeFiles/webcam.dir
-/home/arthur/Documents/projeto_soe/build/CMakeFiles/edit_cache.dir
-/home/arthur/Documents/projeto_soe/build/CMakeFiles/rebuild_cache.dir
+/home/arthur/Documents/Projeto_SOE/build/CMakeFiles/projeto.dir
+/home/arthur/Documents/Projeto_SOE/build/CMakeFiles/edit_cache.dir
+/home/arthur/Documents/Projeto_SOE/build/CMakeFiles/rebuild_cache.dir

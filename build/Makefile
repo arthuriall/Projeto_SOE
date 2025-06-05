@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/arthur/Documents/projeto_soe
+CMAKE_SOURCE_DIR = /home/arthur/Documents/Projeto_SOE
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/arthur/Documents/projeto_soe/build
+CMAKE_BINARY_DIR = /home/arthur/Documents/Projeto_SOE/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/Documents/projeto_soe/build/CMakeFiles /home/arthur/Documents/projeto_soe/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/Documents/Projeto_SOE/build/CMakeFiles /home/arthur/Documents/Projeto_SOE/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/Documents/projeto_soe/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/Documents/Projeto_SOE/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named webcam
+# Target rules for targets named projeto
 
 # Build rule for target.
-webcam: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 webcam
-.PHONY : webcam
+projeto: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 projeto
+.PHONY : projeto
 
 # fast build rule for target.
-webcam/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/build
-.PHONY : webcam/fast
+projeto/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/build
+.PHONY : projeto/fast
 
 src/camera.o: src/camera.cpp.o
 .PHONY : src/camera.o
 
 # target to build an object file
 src/camera.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/camera.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/camera.cpp.o
 .PHONY : src/camera.cpp.o
 
 src/camera.i: src/camera.cpp.i
@@ -142,7 +142,7 @@ src/camera.i: src/camera.cpp.i
 
 # target to preprocess a source file
 src/camera.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/camera.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/camera.cpp.i
 .PHONY : src/camera.cpp.i
 
 src/camera.s: src/camera.cpp.s
@@ -150,7 +150,7 @@ src/camera.s: src/camera.cpp.s
 
 # target to generate assembly for a file
 src/camera.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/camera.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/camera.cpp.s
 .PHONY : src/camera.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -158,7 +158,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -166,7 +166,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -174,7 +174,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -185,7 +185,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... webcam"
+	@echo "... projeto"
 	@echo "... src/camera.o"
 	@echo "... src/camera.i"
 	@echo "... src/camera.s"

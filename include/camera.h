@@ -6,7 +6,7 @@
 
 bool openCamera(cv::VideoCapture& cap, int device = 0);
 void closeCamera(cv::VideoCapture& cap);
-void processFrame(cv::VideoCapture& cap, int offset);
+void processFrame(cv::VideoCapture& cap);
 std::string detectColor(const cv::Scalar& meanColor);
 
 #endif
