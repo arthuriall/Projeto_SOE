@@ -37,11 +37,11 @@ void threadBotao() {
     }
     std::cout << "[BOTAO] Thread finalizada" << std::endl;
 }
-
 void threadCamera() {
     cv::VideoCapture cap;
     int r, g, b;
     std::cout << "[CAMERA] Thread iniciada" << std::endl;
+
     while (!exitProgram) {
         if (sistemaAtivo) {
             if (!cap.isOpened()) {
@@ -54,8 +54,29 @@ void threadCamera() {
                     std::cout << "[CAMERA] Camera aberta com sucesso" << std::endl;
                 }
             }
-            std::string cor = processFrame(cap, r, g, b);
-            if (!cor.empty()) {
+
+            cv::Mat frame;
+            cap >> frame;
+            if (frame.empty()) {
+                std::cerr << "[CAMERA] Frame vazio!" << std::endl;
+                continue;
+            }
+
+            int rectSize = 20;
+            int x = frame.cols / 2;
+            int y = frame.rows / 2;
+            cv::Rect roi(x - rectSize / 2, y - rectSize / 2, rectSize, rectSize);
+
+            cv::Mat region = frame(roi);
+            cv::Scalar meanColor = cv::mean(region);
+
+            b = static_cast<int>(meanColor[0]);
+            g = static_cast<int>(meanColor[1]);
+            r = static_cast<int>(meanColor[2]);
+
+            std::string cor = detectColorRGB(cv::Vec3b(b, g, r));
+
+            {
                 std::lock_guard<std::mutex> lock(mtxCor);
                 if (cor != corDetectada) {
                     corDetectada = cor;
@@ -63,32 +84,54 @@ void threadCamera() {
                     std::cout << "[CAMERA] Cor detectada atualizada: " << cor << std::endl;
                 }
             }
+
+            // Desenhar retngulo na regio central e texto com cor detectada
+            cv::rectangle(frame, roi, cv::Scalar(255, 0, 0), 2);
+            cv::putText(frame, cor, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0,
+                        cv::Scalar(255, 255, 255), 2);
+
+            // Redimensionar para 320x240 antes de mostrar
+            cv::Mat resizedFrame;
+            cv::Size tamanho(320, 240);
+            cv::resize(frame, resizedFrame, tamanho);
+
+            cv::imshow("Camera", resizedFrame);
+            cv::waitKey(1);  // para atualizar a imagem na janela
         } else {
             if (cap.isOpened()) {
                 cap.release();
+                cv::destroyWindow("Camera");
                 std::cout << "[CAMERA] Camera fechada" << std::endl;
             }
         }
+
         std::this_thread::sleep_for(std::chrono::milliseconds(30));
     }
-    if (cap.isOpened()) cap.release();
+
+    if (cap.isOpened()) {
+        cap.release();
+        cv::destroyWindow("Camera");
+    }
     std::cout << "[CAMERA] Thread finalizada" << std::endl;
 }
 
+
 void threadLaser() {
     constexpr int intervaloPiscarMs = 500;
-    std::cout << "[LASER] Thread iniciada" << std::endl;
+    bool estadoLaser = false;  // varivel para manter o estado do laser
+
     while (!exitProgram) {
         if (sistemaAtivo) {
-            alternarLaser(PIN_LASER, intervaloPiscarMs);
+            alternarLaser(PIN_LASER, estadoLaser, intervaloPiscarMs);
         } else {
             desligarLaser(PIN_LASER);
+            estadoLaser = false;  // garante que o estado est resetado quando inativo
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
     desligarLaser(PIN_LASER);
-    std::cout << "[LASER] Thread finalizada" << std::endl;
 }
+
 
 void threadLCD() {
     std::cout << "[LCD] Thread iniciada" << std::endl;
