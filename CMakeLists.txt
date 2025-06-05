@@ -1,21 +1,23 @@
 cmake_minimum_required(VERSION 3.10)
-project(Projeto_SOE)
+project(ProjetoLaserBotao)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
+# OpenCV
 find_package(OpenCV REQUIRED)
 
-include_directories(
+# Arquivos-fonte
+file(GLOB SOURCES "src/*.cpp")
+
+add_executable(projeto ${SOURCES})
+
+# Incluir diretórios com os headers
+target_include_directories(projeto PRIVATE
     ${OpenCV_INCLUDE_DIRS}
-    include
+    ${PROJECT_SOURCE_DIR}/include
 )
 
-add_executable(projeto
-    src/main.cpp
-    src/camera.cpp
-    src/lcd.cpp
-)
-
+# Link com bibliotecas
 target_link_libraries(projeto
     ${OpenCV_LIBS}
     wiringPi

@@ -129,6 +129,30 @@ projeto/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/build
 .PHONY : projeto/fast
 
+src/botao.o: src/botao.cpp.o
+.PHONY : src/botao.o
+
+# target to build an object file
+src/botao.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/botao.cpp.o
+.PHONY : src/botao.cpp.o
+
+src/botao.i: src/botao.cpp.i
+.PHONY : src/botao.i
+
+# target to preprocess a source file
+src/botao.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/botao.cpp.i
+.PHONY : src/botao.cpp.i
+
+src/botao.s: src/botao.cpp.s
+.PHONY : src/botao.s
+
+# target to generate assembly for a file
+src/botao.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/botao.cpp.s
+.PHONY : src/botao.cpp.s
+
 src/camera.o: src/camera.cpp.o
 .PHONY : src/camera.o
 
@@ -152,6 +176,30 @@ src/camera.s: src/camera.cpp.s
 src/camera.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/camera.cpp.s
 .PHONY : src/camera.cpp.s
+
+src/laser.o: src/laser.cpp.o
+.PHONY : src/laser.o
+
+# target to build an object file
+src/laser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/laser.cpp.o
+.PHONY : src/laser.cpp.o
+
+src/laser.i: src/laser.cpp.i
+.PHONY : src/laser.i
+
+# target to preprocess a source file
+src/laser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/laser.cpp.i
+.PHONY : src/laser.cpp.i
+
+src/laser.s: src/laser.cpp.s
+.PHONY : src/laser.s
+
+# target to generate assembly for a file
+src/laser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/laser.cpp.s
+.PHONY : src/laser.cpp.s
 
 src/lcd.o: src/lcd.cpp.o
 .PHONY : src/lcd.o
@@ -201,6 +249,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/test.o: src/test.cpp.o
+.PHONY : src/test.o
+
+# target to build an object file
+src/test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/test.cpp.o
+.PHONY : src/test.cpp.o
+
+src/test.i: src/test.cpp.i
+.PHONY : src/test.i
+
+# target to preprocess a source file
+src/test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/test.cpp.i
+.PHONY : src/test.cpp.i
+
+src/test.s: src/test.cpp.s
+.PHONY : src/test.s
+
+# target to generate assembly for a file
+src/test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/src/test.cpp.s
+.PHONY : src/test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -210,15 +282,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... projeto"
+	@echo "... src/botao.o"
+	@echo "... src/botao.i"
+	@echo "... src/botao.s"
 	@echo "... src/camera.o"
 	@echo "... src/camera.i"
 	@echo "... src/camera.s"
+	@echo "... src/laser.o"
+	@echo "... src/laser.i"
+	@echo "... src/laser.s"
 	@echo "... src/lcd.o"
 	@echo "... src/lcd.i"
 	@echo "... src/lcd.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/test.o"
+	@echo "... src/test.i"
+	@echo "... src/test.s"
 .PHONY : help
 
 

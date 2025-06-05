@@ -69,19 +69,19 @@ include CMakeFiles/projeto.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/projeto.dir/flags.make
 
-CMakeFiles/projeto.dir/src/main.cpp.o: CMakeFiles/projeto.dir/flags.make
-CMakeFiles/projeto.dir/src/main.cpp.o: /home/arthur/Documents/Projeto_SOE/src/main.cpp
-CMakeFiles/projeto.dir/src/main.cpp.o: CMakeFiles/projeto.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/projeto.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projeto.dir/src/main.cpp.o -MF CMakeFiles/projeto.dir/src/main.cpp.o.d -o CMakeFiles/projeto.dir/src/main.cpp.o -c /home/arthur/Documents/Projeto_SOE/src/main.cpp
+CMakeFiles/projeto.dir/src/botao.cpp.o: CMakeFiles/projeto.dir/flags.make
+CMakeFiles/projeto.dir/src/botao.cpp.o: /home/arthur/Documents/Projeto_SOE/src/botao.cpp
+CMakeFiles/projeto.dir/src/botao.cpp.o: CMakeFiles/projeto.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/projeto.dir/src/botao.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projeto.dir/src/botao.cpp.o -MF CMakeFiles/projeto.dir/src/botao.cpp.o.d -o CMakeFiles/projeto.dir/src/botao.cpp.o -c /home/arthur/Documents/Projeto_SOE/src/botao.cpp
 
-CMakeFiles/projeto.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projeto.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/Projeto_SOE/src/main.cpp > CMakeFiles/projeto.dir/src/main.cpp.i
+CMakeFiles/projeto.dir/src/botao.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projeto.dir/src/botao.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/Projeto_SOE/src/botao.cpp > CMakeFiles/projeto.dir/src/botao.cpp.i
 
-CMakeFiles/projeto.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projeto.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/Projeto_SOE/src/main.cpp -o CMakeFiles/projeto.dir/src/main.cpp.s
+CMakeFiles/projeto.dir/src/botao.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projeto.dir/src/botao.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/Projeto_SOE/src/botao.cpp -o CMakeFiles/projeto.dir/src/botao.cpp.s
 
 CMakeFiles/projeto.dir/src/camera.cpp.o: CMakeFiles/projeto.dir/flags.make
 CMakeFiles/projeto.dir/src/camera.cpp.o: /home/arthur/Documents/Projeto_SOE/src/camera.cpp
@@ -97,10 +97,24 @@ CMakeFiles/projeto.dir/src/camera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projeto.dir/src/camera.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/Projeto_SOE/src/camera.cpp -o CMakeFiles/projeto.dir/src/camera.cpp.s
 
+CMakeFiles/projeto.dir/src/laser.cpp.o: CMakeFiles/projeto.dir/flags.make
+CMakeFiles/projeto.dir/src/laser.cpp.o: /home/arthur/Documents/Projeto_SOE/src/laser.cpp
+CMakeFiles/projeto.dir/src/laser.cpp.o: CMakeFiles/projeto.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/projeto.dir/src/laser.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projeto.dir/src/laser.cpp.o -MF CMakeFiles/projeto.dir/src/laser.cpp.o.d -o CMakeFiles/projeto.dir/src/laser.cpp.o -c /home/arthur/Documents/Projeto_SOE/src/laser.cpp
+
+CMakeFiles/projeto.dir/src/laser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projeto.dir/src/laser.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/Projeto_SOE/src/laser.cpp > CMakeFiles/projeto.dir/src/laser.cpp.i
+
+CMakeFiles/projeto.dir/src/laser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projeto.dir/src/laser.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/Projeto_SOE/src/laser.cpp -o CMakeFiles/projeto.dir/src/laser.cpp.s
+
 CMakeFiles/projeto.dir/src/lcd.cpp.o: CMakeFiles/projeto.dir/flags.make
 CMakeFiles/projeto.dir/src/lcd.cpp.o: /home/arthur/Documents/Projeto_SOE/src/lcd.cpp
 CMakeFiles/projeto.dir/src/lcd.cpp.o: CMakeFiles/projeto.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/projeto.dir/src/lcd.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/projeto.dir/src/lcd.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projeto.dir/src/lcd.cpp.o -MF CMakeFiles/projeto.dir/src/lcd.cpp.o.d -o CMakeFiles/projeto.dir/src/lcd.cpp.o -c /home/arthur/Documents/Projeto_SOE/src/lcd.cpp
 
 CMakeFiles/projeto.dir/src/lcd.cpp.i: cmake_force
@@ -111,18 +125,52 @@ CMakeFiles/projeto.dir/src/lcd.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projeto.dir/src/lcd.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/Projeto_SOE/src/lcd.cpp -o CMakeFiles/projeto.dir/src/lcd.cpp.s
 
+CMakeFiles/projeto.dir/src/main.cpp.o: CMakeFiles/projeto.dir/flags.make
+CMakeFiles/projeto.dir/src/main.cpp.o: /home/arthur/Documents/Projeto_SOE/src/main.cpp
+CMakeFiles/projeto.dir/src/main.cpp.o: CMakeFiles/projeto.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/projeto.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projeto.dir/src/main.cpp.o -MF CMakeFiles/projeto.dir/src/main.cpp.o.d -o CMakeFiles/projeto.dir/src/main.cpp.o -c /home/arthur/Documents/Projeto_SOE/src/main.cpp
+
+CMakeFiles/projeto.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projeto.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/Projeto_SOE/src/main.cpp > CMakeFiles/projeto.dir/src/main.cpp.i
+
+CMakeFiles/projeto.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projeto.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/Projeto_SOE/src/main.cpp -o CMakeFiles/projeto.dir/src/main.cpp.s
+
+CMakeFiles/projeto.dir/src/test.cpp.o: CMakeFiles/projeto.dir/flags.make
+CMakeFiles/projeto.dir/src/test.cpp.o: /home/arthur/Documents/Projeto_SOE/src/test.cpp
+CMakeFiles/projeto.dir/src/test.cpp.o: CMakeFiles/projeto.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/projeto.dir/src/test.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projeto.dir/src/test.cpp.o -MF CMakeFiles/projeto.dir/src/test.cpp.o.d -o CMakeFiles/projeto.dir/src/test.cpp.o -c /home/arthur/Documents/Projeto_SOE/src/test.cpp
+
+CMakeFiles/projeto.dir/src/test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projeto.dir/src/test.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/Projeto_SOE/src/test.cpp > CMakeFiles/projeto.dir/src/test.cpp.i
+
+CMakeFiles/projeto.dir/src/test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projeto.dir/src/test.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/Projeto_SOE/src/test.cpp -o CMakeFiles/projeto.dir/src/test.cpp.s
+
 # Object files for target projeto
 projeto_OBJECTS = \
-"CMakeFiles/projeto.dir/src/main.cpp.o" \
+"CMakeFiles/projeto.dir/src/botao.cpp.o" \
 "CMakeFiles/projeto.dir/src/camera.cpp.o" \
-"CMakeFiles/projeto.dir/src/lcd.cpp.o"
+"CMakeFiles/projeto.dir/src/laser.cpp.o" \
+"CMakeFiles/projeto.dir/src/lcd.cpp.o" \
+"CMakeFiles/projeto.dir/src/main.cpp.o" \
+"CMakeFiles/projeto.dir/src/test.cpp.o"
 
 # External object files for target projeto
 projeto_EXTERNAL_OBJECTS =
 
-projeto: CMakeFiles/projeto.dir/src/main.cpp.o
+projeto: CMakeFiles/projeto.dir/src/botao.cpp.o
 projeto: CMakeFiles/projeto.dir/src/camera.cpp.o
+projeto: CMakeFiles/projeto.dir/src/laser.cpp.o
 projeto: CMakeFiles/projeto.dir/src/lcd.cpp.o
+projeto: CMakeFiles/projeto.dir/src/main.cpp.o
+projeto: CMakeFiles/projeto.dir/src/test.cpp.o
 projeto: CMakeFiles/projeto.dir/build.make
 projeto: /usr/lib/aarch64-linux-gnu/libopencv_stitching.so.4.6.0
 projeto: /usr/lib/aarch64-linux-gnu/libopencv_alphamat.so.4.6.0
@@ -180,7 +228,7 @@ projeto: /usr/lib/aarch64-linux-gnu/libopencv_photo.so.4.6.0
 projeto: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.4.6.0
 projeto: /usr/lib/aarch64-linux-gnu/libopencv_core.so.4.6.0
 projeto: CMakeFiles/projeto.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable projeto"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arthur/Documents/Projeto_SOE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable projeto"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/projeto.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

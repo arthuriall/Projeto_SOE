@@ -24,7 +24,6 @@ std::string detectColorRGB(const cv::Vec3b& pixel) {
     if (b > r && b > g) return "Azul";
     return "Indefinido";
 }
-
 std::string processFrame(cv::VideoCapture& cap, int& r, int& g, int& b) {
     static std::string ultimaCor;
 
@@ -58,6 +57,12 @@ std::string processFrame(cv::VideoCapture& cap, int& r, int& g, int& b) {
     cv::putText(frame, cor, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0,
                 cv::Scalar(255, 255, 255), 2);
 
-    cv::imshow("Camera", frame);
+    // Redimensionar o frame antes de mostrar
+    cv::Mat resizedFrame;
+    double scale = 0.5;  // diminui para 50% do tamanho original, por exemplo
+    cv::resize(frame, resizedFrame, cv::Size(), scale, scale);
+
+    cv::imshow("Camera", resizedFrame);
     return cor;
 }
+

@@ -8,9 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/arthur/Documents/Projeto_SOE/src/botao.cpp" "CMakeFiles/projeto.dir/src/botao.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/botao.cpp.o.d"
   "/home/arthur/Documents/Projeto_SOE/src/camera.cpp" "CMakeFiles/projeto.dir/src/camera.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/camera.cpp.o.d"
+  "/home/arthur/Documents/Projeto_SOE/src/laser.cpp" "CMakeFiles/projeto.dir/src/laser.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/laser.cpp.o.d"
   "/home/arthur/Documents/Projeto_SOE/src/lcd.cpp" "CMakeFiles/projeto.dir/src/lcd.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/lcd.cpp.o.d"
   "/home/arthur/Documents/Projeto_SOE/src/main.cpp" "CMakeFiles/projeto.dir/src/main.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/main.cpp.o.d"
+  "/home/arthur/Documents/Projeto_SOE/src/test.cpp" "CMakeFiles/projeto.dir/src/test.cpp.o" "gcc" "CMakeFiles/projeto.dir/src/test.cpp.o.d"
   )
 
 # Targets to which this target links.
