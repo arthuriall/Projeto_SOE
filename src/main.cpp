@@ -5,8 +5,10 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <unistd.h>
 
-constexpr int PIN_BOTAO = 26;  // GPIO do botão
+
+constexpr int PIN_BOTAO = 26;  // GPIO do boto
 constexpr int PIN_LASER = 19;  // GPIO do laser
 
 void piscarLaser(bool& ligado, int intervaloMs) {
@@ -16,7 +18,7 @@ void piscarLaser(bool& ligado, int intervaloMs) {
 }
 
 int main() {
-    wiringPiSetup();
+    wiringPiSetupGpio();
     pinMode(PIN_BOTAO, INPUT);
     pullUpDnControl(PIN_BOTAO, PUD_UP);  // Ativa pull-up interno
     pinMode(PIN_LASER, OUTPUT);
@@ -24,6 +26,7 @@ int main() {
 
     lcdInit();
     lcdClear();
+    usleep(3000);  // Delay maior para garantir limpeza
     lcdSetCursor(0, 0);
     lcdPrint("Bem vindo!");
     lcdSetCursor(1, 0);
@@ -47,11 +50,13 @@ int main() {
 
             if (sistemaAtivo) {
                 lcdClear();
+                usleep(3000);
                 lcdSetCursor(0, 0);
                 lcdPrint("Sistema iniciado");
                 if (!openCamera(cap)) {
                     std::cerr << "Erro ao abrir camera\n";
                     lcdClear();
+                    usleep(3000);
                     lcdSetCursor(0, 0);
                     lcdPrint("Erro camera");
                     sistemaAtivo = false;
@@ -60,12 +65,13 @@ int main() {
                 closeCamera(cap);
                 digitalWrite(PIN_LASER, LOW);
                 lcdClear();
+                usleep(3000);
                 lcdSetCursor(0, 0);
                 lcdPrint("Sistema parado");
                 lcdSetCursor(1, 0);
                 lcdPrint("Pressione botao");
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(300)); // Debounce e evitar múltiplas leituras
+            std::this_thread::sleep_for(std::chrono::milliseconds(300)); // Debounce e evitar mltiplas leituras
         }
         ultimoEstadoBotao = estadoBotao;
 
@@ -74,7 +80,7 @@ int main() {
             static auto lastBlink = std::chrono::steady_clock::now();
             auto now = std::chrono::steady_clock::now();
             if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastBlink).count() > 200) {
-                piscarLaser(laserLigado, 0);  // só alterna o estado
+                piscarLaser(laserLigado, 0);  // salterna o estado
                 lastBlink = now;
             }
 
@@ -82,9 +88,10 @@ int main() {
 
             if (!cor.empty() && cor != ultimaCor) {
                 lcdClear();
+                usleep(3000);  // Aguarde um pouco aps limpar
                 lcdSetCursor(0, 0);
                 lcdPrint("Cor: ");
-                lcdPrint(cor.c_str());
+                lcdPrint(cor);
 
                 lcdSetCursor(1, 0);
                 char rgbText[20];
