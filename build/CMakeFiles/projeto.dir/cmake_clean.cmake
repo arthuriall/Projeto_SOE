@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/projeto.dir/src/camera.cpp.o"
   "CMakeFiles/projeto.dir/src/camera.cpp.o.d"
+  "CMakeFiles/projeto.dir/src/lcd.cpp.o"
+  "CMakeFiles/projeto.dir/src/lcd.cpp.o.d"
   "CMakeFiles/projeto.dir/src/main.cpp.o"
   "CMakeFiles/projeto.dir/src/main.cpp.o.d"
   "projeto"

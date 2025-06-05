@@ -6,7 +6,7 @@
 
 bool openCamera(cv::VideoCapture& cap, int device = 0);
 void closeCamera(cv::VideoCapture& cap);
-std::string processFrame(cv::VideoCapture& cap);
-std::string detectColor(const cv::Vec3b& pixel);
+std::string detectColorRGB(const cv::Vec3b& pixel);
+std::string processFrame(cv::VideoCapture& cap, int& r, int& g, int& b);
 
-#endif
+#endif // CAMERA_H
