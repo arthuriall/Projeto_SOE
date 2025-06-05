@@ -1,16 +1,26 @@
 cmake_minimum_required(VERSION 3.10)
-project(projeto_soe)
+project(Projeto_SOE)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 14)
 
+# Busca o OpenCV instalado
 find_package(OpenCV REQUIRED)
 
-include_directories(include ${OpenCV_INCLUDE_DIRS})
-
+# Adiciona os arquivos-fonte do projeto
 add_executable(projeto
-    src/main.cpp
-    src/camera.cpp
+    main.cpp
+    camera.cpp
+    lcd.cpp
 )
 
-target_link_libraries(projeto ${OpenCV_LIBS})
+# Inclui diretórios de cabeçalhos
+include_directories(
+    ${OpenCV_INCLUDE_DIRS}
+    .
+)
+
+# Linka com bibliotecas do OpenCV e WiringPi
+target_link_libraries(projeto
+    ${OpenCV_LIBS}
+    wiringPi
+)

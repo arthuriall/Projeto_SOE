@@ -41,21 +41,16 @@ std::string detectColor(const cv::Vec3b& pixel) {
 
     return "Indefinido";
 }
-void processFrame(cv::VideoCapture& cap) {
+
+std::string processFrame(cv::VideoCapture& cap) {
     static std::string ultimaCor = "";
 
     cv::Mat frame;
     cap >> frame;
-    if (frame.empty()) return;
-
-    // Redimensiona para largura 640px (mantendo proporo)
-    const int newWidth = 640;
-    double scale = newWidth / static_cast<double>(frame.cols);
-    cv::resize(frame, frame, cv::Size(), scale, scale);
+    if (frame.empty()) return "";
 
     int x = frame.cols / 2;
     int y = frame.rows / 2;
-
     cv::Vec3b pixel = frame.at<cv::Vec3b>(y, x);
     std::string cor = detectColor(pixel);
 
@@ -69,4 +64,5 @@ void processFrame(cv::VideoCapture& cap) {
                 cv::Scalar(255, 255, 255), 2);
 
     cv::imshow("Camera", frame);
+    return cor;
 }
