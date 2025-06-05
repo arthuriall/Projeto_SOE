@@ -3,9 +3,9 @@
 #include <thread>
 #include <atomic>
 #include <chrono>
+#include <vector> // Para cv::Rect, cv::Scalar
 
-#include <opencv2/opencv.hpp> // Inclui highgui.hpp implicitamente
-// Se não, adicione: #include <opencv2/highgui.hpp>
+#include <opencv2/opencv.hpp> // Inclui tudo do OpenCV necessário
 
 #include <wiringPi.h>
 #include <unistd.h>
@@ -18,7 +18,7 @@
 #define LCD_D6  6
 #define LCD_D7  7
 
-// --- LCD Control Functions ---
+// --- LCD Control Functions (seu código do LCD aqui, como antes) ---
 void pulseEnable() {
     digitalWrite(LCD_E, HIGH);
     usleep(500);
@@ -82,55 +82,51 @@ void lcdPrint(const std::string& text) {
 // --- End LCD functions ---
 
 
-// Variável atômica para parar thread
 std::atomic<bool> stop_processing(false);
 
-// Função para abrir câmera
 bool openCamera(cv::VideoCapture& cap, int device) {
     if (!cap.open(device)) {
         std::cerr << "Erro ao abrir câmera no dispositivo " << device << std::endl;
         return false;
     }
-    // Opcional: Configurar resolução para um "frame pequeno" se a default for muito grande
-    // cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    // cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
     std::cout << "Câmera aberta no dispositivo " << device << std::endl;
     return true;
 }
 
-// Função para fechar câmera
 void closeCamera(cv::VideoCapture& cap) {
     if (cap.isOpened()) {
         cap.release();
         std::cout << "Câmera liberada." << std::endl;
     }
+    // cv::destroyAllWindows(); // JANELA OPENCV DESABILITADA
 }
 
-// Função para detectar cor primária RGB (recebe int direto)
 std::string detectColorRGB(int r, int g, int b) {
     int threshold = 120;
     int margin = 60;
-
     if (r > threshold && r > g + margin && r > b + margin) return "Vermelho";
     if (g > threshold && g > r + margin && g > b + margin) return "Verde";
     if (b > threshold && b > r + margin && b > g + margin) return "Azul";
     return "Indefinido";
 }
 
-// Thread de processamento da câmera
 void cameraProcessingThread(cv::VideoCapture& cap) {
     std::string lastColor = "";
     cv::Mat frame;
-    const std::string window_name = "Camera Feed"; // Nome da janela
+    // const std::string window_name = "Camera Feed"; // JANELA OPENCV DESABILITADA
+
+    std::cout << "Thread de processamento iniciada (COM LCD, SEM janela OpenCV)." << std::endl;
 
     while (!stop_processing) {
         if (!cap.isOpened()) {
-            std::cerr << "Câmera fechada inesperadamente." << std::endl;
-            break;
+            std::cerr << "Câmera fechada inesperadamente na thread." << std::endl;
+            // Adicione uma pequena pausa antes de tentar sair ou dar break para evitar busy loop no erro
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            break; 
         }
 
         if (!cap.read(frame) || frame.empty()) {
-            std::cerr << "Erro ao capturar frame." << std::endl;
+            // std::cerr << "Erro ao capturar frame na thread." << std::endl; // Pode poluir
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
             continue;
         }
@@ -140,7 +136,7 @@ void cameraProcessingThread(cv::VideoCapture& cap) {
         int cy = frame.rows / 2;
 
         if (frame.cols < rectSize || frame.rows < rectSize) {
-            std::cerr << "Frame muito pequeno para ROI." << std::endl;
+            // std::cerr << "Frame muito pequeno para ROI na thread." << std::endl;
             std::this_thread::sleep_for(std::chrono::milliseconds(30));
             continue;
         }
@@ -149,50 +145,38 @@ void cameraProcessingThread(cv::VideoCapture& cap) {
         cv::Mat region = frame(roi);
         cv::Scalar meanColor = cv::mean(region);
 
-        int b_val = static_cast<int>(meanColor[0]); // Renomeado para b_val para clareza
-        int g_val = static_cast<int>(meanColor[1]); // Renomeado para g_val
-        int r_val = static_cast<int>(meanColor[2]); // Renomeado para r_val
+        int b_val = static_cast<int>(meanColor[0]);
+        int g_val = static_cast<int>(meanColor[1]);
+        int r_val = static_cast<int>(meanColor[2]);
 
         std::string currentColor = detectColorRGB(r_val, g_val, b_val);
 
         if (currentColor != lastColor) {
-            std::cout << "Cor detectada: " << currentColor 
+            std::cout << "[Thread] Cor detectada: " << currentColor 
                       << " (R=" << r_val << " G=" << g_val << " B=" << b_val << ")\n";
 
-            // Atualiza LCD
             lcdSetCursor(0, 0);
-            lcdPrint(currentColor + std::string(16 - currentColor.length(), ' ')); // Padding com espaços
+            lcdPrint(currentColor + std::string(16 - currentColor.length(), ' '));
 
             lcdSetCursor(1, 0);
-            std::string rgbText = "R" + std::to_string(r_val) + " G" + std::to_string(g_val) + " B" + std::to_string(b_val);
+            std::string rgbText = "R" + std::to_string(r_val) + "G" + std::to_string(g_val) + "B" + std::to_string(b_val); // Sem espaços para caber mais
             if (rgbText.length() > 16) rgbText = rgbText.substr(0, 16);
-            else rgbText += std::string(16 - rgbText.length(), ' '); // Padding com espaços
+            else rgbText += std::string(16 - rgbText.length(), ' ');
             lcdPrint(rgbText);
 
             lastColor = currentColor;
         }
 
-        // --- Mostrar o frame ---
-        // Desenha o ROI no frame para visualização
-        cv::rectangle(frame, roi, cv::Scalar(0, 255, 0), 1); // Retângulo verde
-
-        // Exibe o frame na janela
-        cv::imshow(window_name, frame);
+        // JANELA OPENCV (imshow, waitKey) DESABILITADA
+        // cv::rectangle(frame, roi, cv::Scalar(0, 255, 0), 1);
+        // cv::imshow(window_name, frame);
+        // char key = (char)cv::waitKey(1);
+        // if (key == 'q' || key == 'Q' || key == 27 /* ESC */) {
+        //     stop_processing = true;
+        // }
         
-        // cv::waitKey(1) é crucial para que o imshow funcione e processe eventos da janela.
-        // Também permite capturar teclas pressionadas na janela da câmera, se desejado.
-        char key = (char)cv::waitKey(1);
-        if (key == 'q' || key == 'Q' || key == 27 /* ESC */) {
-            stop_processing = true; // Permite fechar pelo 'q' ou ESC na janela da câmera
-        }
-        // --- Fim mostrar frame ---
-
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Reduzido para melhor responsividade da janela
-                                                                    // Ajuste conforme necessário. Se a janela estiver lenta, diminua mais.
-                                                                    // Se o CPU estiver alto, aumente.
+        std::this_thread::sleep_for(std::chrono::milliseconds(150)); // Delay para a thread
     }
-
     std::cout << "Thread de processamento finalizada." << std::endl;
 }
 
@@ -210,42 +194,47 @@ int main() {
     usleep(1000000); // 1 segundo
 
     cv::VideoCapture cap;
-    if (!openCamera(cap, 0)) { // Tenta abrir a câmera 0
+    // Adicionando logs para abertura da câmera
+    std::cout << "MAIN: Tentando abrir a camera..." << std::endl;
+    if (!openCamera(cap, 0)) {
+        std::cerr << "MAIN: Falha CRÍTICA ao abrir camera!" << std::endl;
         lcdClear();
         lcdPrint("Erro Camera");
         return -1;
     }
+    std::cout << "MAIN: Camera parece ter sido aberta com sucesso pela funcao openCamera." << std::endl;
+    // Verificação adicional se a câmera está realmente aberta após a chamada
+    if (!cap.isOpened()) {
+        std::cerr << "MAIN: ERRO GRAVE - cap.isOpened() retornou false APOS openCamera retornar true!" << std::endl;
+        lcdClear();
+        lcdPrint("Falha Cam Init");
+        return -1;
+    }
+    std::cout << "MAIN: cap.isOpened() confirma que a camera esta aberta." << std::endl;
+
 
     lcdClear();
     lcdPrint("Camera OK");
     lcdSetCursor(1, 0);
     lcdPrint("Processando...");
 
-    // --- Criar janela OpenCV ANTES de iniciar a thread ---
-    const std::string window_name = "Camera Feed";
-    cv::namedWindow(window_name, cv::WINDOW_AUTOSIZE);
-    // Se quiser forçar um tamanho menor e a câmera capturar em alta resolução:
-    // cv::namedWindow(window_name, cv::WINDOW_NORMAL);
-    // cv::resizeWindow(window_name, 320, 240); // Exemplo de tamanho pequeno
+    // JANELA OPENCV DESABILITADA
+    // const std::string window_name = "Camera Feed";
+    // cv::namedWindow(window_name, cv::WINDOW_AUTOSIZE);
 
     stop_processing = false;
     std::thread camThread(cameraProcessingThread, std::ref(cap));
 
-    std::cout << "Pressione ENTER no console OU 'q'/'ESC' na janela da câmera para parar..." << std::endl;
-    
-    // O loop principal pode ficar mais leve agora, ou esperar por std::cin.get()
-    // Se a janela da câmera puder fechar o programa com 'q' ou ESC, std::cin.get() ainda funciona como outra opção.
-    std::cin.get(); // Aguarda o Enter no console
+    std::cout << "Pressione ENTER para parar..." << std::endl;
+    std::cin.get();
 
-    stop_processing = true; // Sinaliza a thread para parar
-    if (camThread.joinable()) {
-        camThread.join(); // Espera a thread da câmera finalizar
-    }
+    stop_processing = true;
+    if (camThread.joinable()) camThread.join();
 
     closeCamera(cap);
 
-    // --- Destruir janelas OpenCV ---
-    cv::destroyAllWindows();
+    // JANELA OPENCV DESABILITADA
+    // cv::destroyAllWindows();
 
     lcdClear();
     lcdPrint("Desligado.");
