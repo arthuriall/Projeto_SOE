@@ -5,7 +5,7 @@
 #include <thread>
 #include <atomic>
 
-// === LCD Definitions ===
+// === LCD Pins (WiringPi) ===
 #define RS 0
 #define E  1
 #define D4 4
@@ -13,12 +13,13 @@
 #define D6 6
 #define D7 7
 
-// === Botão ===
-#define BOTAO 2  // GPIO27 (WiringPi 2)
+// === Controle ===
+#define BOTAO 2     // GPIO27 (WiringPi 2)
+#define LED   3     // GPIO22 (WiringPi 3)
 
-// === Controle do loop principal ===
-std::atomic<bool> executando(false);
+std::atomic<bool> executando(false);  // Estado do sistema
 
+// === LCD ===
 void pulseEnable() {
     digitalWrite(E, HIGH);
     usleep(500);
@@ -78,6 +79,7 @@ void lcdPrint(const std::string& text) {
     }
 }
 
+// === Cor RGB → Nome ===
 std::string detectColorRGB(int r, int g, int b) {
     if (r > 200 && g < 80 && b < 80) return "Vermelho";
     if (g > 200 && r < 80 && b < 80) return "Verde";
@@ -89,6 +91,7 @@ std::string detectColorRGB(int r, int g, int b) {
     return "Indefinido";
 }
 
+// === Processa Frame e Detecta Cor ===
 std::string processFrame(cv::VideoCapture& cap, int& r, int& g, int& b) {
     static std::string ultimaCor;
 
@@ -100,6 +103,7 @@ std::string processFrame(cv::VideoCapture& cap, int& r, int& g, int& b) {
     int x = frame.cols / 2;
     int y = frame.rows / 2;
     cv::Rect roi(x - rectSize / 2, y - rectSize / 2, rectSize, rectSize);
+
     cv::Mat region = frame(roi);
     cv::Scalar meanColor = cv::mean(region);
 
@@ -117,6 +121,7 @@ std::string processFrame(cv::VideoCapture& cap, int& r, int& g, int& b) {
     return cor;
 }
 
+// === Thread para Detecção + LED ===
 void colorThread(cv::VideoCapture& cap) {
     while (executando) {
         int r, g, b;
@@ -130,10 +135,15 @@ void colorThread(cv::VideoCapture& cap) {
         snprintf(buffer, sizeof(buffer), "R:%d G:%d B:%d", r, g, b);
         lcdPrint(buffer);
 
-        usleep(500000); // 0.5s
+        digitalWrite(LED, HIGH);
+        usleep(500000);  // 0.5s
+        digitalWrite(LED, LOW);
+        usleep(500000);  // 0.5s
     }
+    digitalWrite(LED, LOW); // Garante LED desligado ao parar
 }
 
+// === Main ===
 int main() {
     std::cout << "Iniciando sistema...\n";
 
@@ -143,19 +153,19 @@ int main() {
     }
 
     pinMode(BOTAO, INPUT);
-    pullUpDnControl(BOTAO, PUD_DOWN);  // Usa resistor pull-down
+    pullUpDnControl(BOTAO, PUD_DOWN);  // Resistor pull-down
+    pinMode(LED, OUTPUT);
+    digitalWrite(LED, LOW);
 
     lcdInit();
     lcdClear();
     lcdPrint("Sistema pronto");
 
     cv::VideoCapture cap(0);
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-
     if (!cap.isOpened()) {
         lcdClear();
-        lcdPrint("Erro na camera");
+        lcdPrint("Erro camera");
+        std::cerr << "Erro ao abrir camera.\n";
         return 1;
     }
 
@@ -164,9 +174,9 @@ int main() {
     while (true) {
         if (digitalRead(BOTAO) == HIGH) {
             if (!executando) {
+                executando = true;
                 lcdClear();
                 lcdPrint("Detectando...");
-                executando = true;
                 t = std::thread(colorThread, std::ref(cap));
             } else {
                 executando = false;
@@ -174,10 +184,10 @@ int main() {
                 lcdClear();
                 lcdPrint("Pausado");
             }
-            delay(1000);  // Debounce
+            delay(1000); // Debounce do botão
         }
 
-        delay(100);
+        delay(100); // Loop principal
     }
 
     cap.release();
