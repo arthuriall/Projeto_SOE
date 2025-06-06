@@ -78,9 +78,9 @@ void lcdPrint(const std::string& text) {
 
 // === Cor RGB → Nome ===
 std::string detectColorRGB(int r, int g, int b) {
-    if (r > g && r <  && b < ) return "Vermelho";
-    if (g > r && g <  && b < ) return "Verde";
-    if (b > r && b <  && g < ) return "Azul";
+    if (r > g && r < b ) return "Vermelho";
+    if (g > r && g < b ) return "Verde";
+    if (b > r && b < g ) return "Azul";
     return "Indefinido";
 }
 
