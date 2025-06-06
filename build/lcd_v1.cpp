@@ -13,11 +13,8 @@
 #define D6 6
 #define D7 7
 
-// === Controle ===
-#define BOTAO 2     // GPIO27 (WiringPi 2)
-#define LED   3     // GPIO22 (WiringPi 3)
-
-std::atomic<bool> executando(false);  // Estado do sistema
+// === LED ===
+#define LED 3  // GPIO22 (WiringPi 3)
 
 // === LCD ===
 void pulseEnable() {
@@ -121,9 +118,11 @@ std::string processFrame(cv::VideoCapture& cap, int& r, int& g, int& b) {
     return cor;
 }
 
-// === Thread para Detecção + LED ===
+// === Thread: Detecta Cor e Pisca LED ===
+std::atomic<bool> running(true);
+
 void colorThread(cv::VideoCapture& cap) {
-    while (executando) {
+    while (running) {
         int r, g, b;
         std::string cor = processFrame(cap, r, g, b);
 
@@ -136,11 +135,11 @@ void colorThread(cv::VideoCapture& cap) {
         lcdPrint(buffer);
 
         digitalWrite(LED, HIGH);
-        usleep(500000);  // 0.5s
+        usleep(500000);
         digitalWrite(LED, LOW);
-        usleep(500000);  // 0.5s
+        usleep(500000);
     }
-    digitalWrite(LED, LOW); // Garante LED desligado ao parar
+    digitalWrite(LED, LOW); // Garante LED desligado
 }
 
 // === Main ===
@@ -152,14 +151,12 @@ int main() {
         return 1;
     }
 
-    pinMode(BOTAO, INPUT);
-    pullUpDnControl(BOTAO, PUD_DOWN);  // Resistor pull-down
     pinMode(LED, OUTPUT);
     digitalWrite(LED, LOW);
 
     lcdInit();
     lcdClear();
-    lcdPrint("Sistema pronto");
+    lcdPrint("Iniciando camera");
 
     cv::VideoCapture cap(0);
     if (!cap.isOpened()) {
@@ -169,27 +166,20 @@ int main() {
         return 1;
     }
 
-    std::thread t;
+    lcdClear();
+    lcdPrint("Camera OK");
 
-    while (true) {
-        if (digitalRead(BOTAO) == HIGH) {
-            if (!executando) {
-                executando = true;
-                lcdClear();
-                lcdPrint("Detectando...");
-                t = std::thread(colorThread, std::ref(cap));
-            } else {
-                executando = false;
-                if (t.joinable()) t.join();
-                lcdClear();
-                lcdPrint("Pausado");
-            }
-            delay(1000); // Debounce do botão
-        }
+    std::thread t(colorThread, std::ref(cap));
 
-        delay(100); // Loop principal
-    }
+    std::cout << "Pressione ENTER para sair.\n";
+    std::cin.get(); // Espera ENTER
 
+    running = false;
+    t.join();
+
+    lcdClear();
+    lcdPrint("Encerrando...");
     cap.release();
+    std::cout << "Programa finalizado.\n";
     return 0;
 }
